@@ -51,13 +51,13 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(auth);
     }
 
-    @GetMapping("/validar-token")
-    public ResponseEntity<String> validaToken(@RequestHeader("Authorization") String authorizationHeader){
+    @GetMapping("/auth/validar-token")
+    public ResponseEntity<Boolean> validaToken(@RequestHeader("Authorization") String authorizationHeader){
         RetorneToken retorneToken = UtilidadeGerais.validaToken(authorizationHeader);
         if(!retorneToken.isValidacao()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(retorneToken.getResposta());
+                .body(retorneToken.isValidacao());
 
-        return ResponseEntity.ok(retorneToken.getResposta());
+        return ResponseEntity.ok(retorneToken.isValidacao());
 
     }
 

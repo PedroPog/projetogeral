@@ -59,4 +59,6 @@ public class AdministrativoController {
         }
         return ResponseEntity.badRequest().body("Não foi possivel atualizar!");
     }
+
+
 }
