@@ -28,7 +28,7 @@ public class UtilidadeGerais {
         UUID userUuid = JwtTokenUtil.getUuidFromToken(token);
 
         retorneToken.setValidacao(true);
-        retorneToken.setResposta("Secure data accessed by user with UUID: " + userUuid);
+        retorneToken.setResposta(String.valueOf(userUuid));
         return retorneToken;
     }
 }
