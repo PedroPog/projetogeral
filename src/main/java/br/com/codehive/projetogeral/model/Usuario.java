@@ -37,7 +37,7 @@ public class Usuario {
     private boolean status;
 
     @Column(name = "role_user")
-    private String role;
+    private String role = "Normal";
 
     public Usuario() {
     }
@@ -51,6 +51,18 @@ public class Usuario {
         this.status = true;
         this.role = "Normal";
     }
+
+    public Usuario(UUID usuarioID, String username, String email, String senha, Instant criacaoTimestamp, Instant atualizaoTimestamp, boolean status, String role) {
+        this.usuarioID = usuarioID;
+        this.username = username;
+        this.email = email;
+        this.senha = senha;
+        this.criacaoTimestamp = criacaoTimestamp;
+        this.atualizaoTimestamp = atualizaoTimestamp;
+        this.status = status;
+        this.role = role;
+    }
+
     //? Constructor para update
     public Usuario(UUID usuarioID, String username, String email, String senha,boolean status, Instant atualizaoTimestamp) {
         this.usuarioID = usuarioID;

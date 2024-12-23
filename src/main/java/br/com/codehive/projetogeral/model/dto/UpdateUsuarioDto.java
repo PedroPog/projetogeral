@@ -8,7 +8,7 @@ public class UpdateUsuarioDto {
     private String username;
     private String email;
     private String senha;
-    private boolean status;
+    private boolean status = true;
 
     public UUID getUsuarioID() {
         return usuarioID;

@@ -1,18 +1,16 @@
 package br.com.codehive.projetogeral.controller;
 
-import br.com.codehive.projetogeral.model.dto.AuthResponse;
-import br.com.codehive.projetogeral.model.dto.CreateUsuarioDto;
-import br.com.codehive.projetogeral.model.dto.LoginRequest;
+import br.com.codehive.projetogeral.config.JwtTokenUtil;
+import br.com.codehive.projetogeral.config.UtilidadeGerais;
+import br.com.codehive.projetogeral.model.dto.*;
 import br.com.codehive.projetogeral.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/user")
@@ -21,7 +19,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public ResponseEntity<String> adicionarUsuario(@RequestBody CreateUsuarioDto usuarioDto){
         try{
             var usuario = usuarioService.adicionarUsuario(usuarioDto);
@@ -34,6 +32,16 @@ public class UsuarioController {
         }
     }
 
+    @PutMapping("/update/{usuarioId}")
+    public ResponseEntity<String> updateUsuario(@PathVariable("usuarioId") String usuarioId,
+                                                @RequestBody UpdateUsuarioDto usuarioDto){
+        if(usuarioId==null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario não autotizado!");
+        }
+        usuarioDto.setUsuarioID(UUID.fromString(usuarioId));
+        return usuarioService.atualizacaoUsuario(usuarioDto);
+    }
+
     @PostMapping("/auth/login")
     public ResponseEntity<AuthResponse> findLogin(@RequestBody LoginRequest loginRequest){
         var auth = usuarioService.login(loginRequest);
@@ -41,6 +49,16 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(auth);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(auth);
+    }
+
+    @GetMapping("/validar-token")
+    public ResponseEntity<String> validaToken(@RequestHeader("Authorization") String authorizationHeader){
+        RetorneToken retorneToken = UtilidadeGerais.validaToken(authorizationHeader);
+        if(!retorneToken.isValidacao()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(retorneToken.getResposta());
+
+        return ResponseEntity.ok(retorneToken.getResposta());
+
     }
 
 }
