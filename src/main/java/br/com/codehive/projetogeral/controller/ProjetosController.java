@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/projetos")
+@CrossOrigin
 public class ProjetosController {
 
     @Autowired

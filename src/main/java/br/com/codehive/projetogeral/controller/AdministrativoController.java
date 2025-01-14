@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("v1/adm")
+@CrossOrigin
 public class AdministrativoController {
 
     @Autowired
