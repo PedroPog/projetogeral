@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -92,4 +93,7 @@ public class UsuarioService {
         return retornoAuth;
     }
 
+    public boolean consultarUUid(UUID idUsuario) {
+        return usuarioRepository.findById(idUsuario).isEmpty();
+    }
 }
