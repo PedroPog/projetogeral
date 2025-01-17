@@ -3,6 +3,7 @@ package br.com.codehive.projetogeral.config;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.security.Key;
 import java.util.Date;

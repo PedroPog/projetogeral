@@ -20,6 +20,11 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @GetMapping
+    public ResponseEntity<?> hello(){
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/register")
     public ResponseEntity<String> adicionarUsuario(@RequestBody CreateUsuarioDto usuarioDto){
         try{
